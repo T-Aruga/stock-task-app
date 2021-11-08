@@ -1,25 +1,61 @@
-import { useState } from 'react';
+import localforage from 'localforage';
+import { useState, useEffect } from 'react';
 
-type Todo = {
-  value: string;
-  id: number;
-  checked: boolean;
-  removed: boolean;
-};
+import GlobalStyles from '@mui/material/GlobalStyles';
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { indigo, pink } from '@mui/material/colors';
 
-type Filter = 'all' | 'checked' | 'unchecked' | 'removed';
+import { TodoItem } from './TodoItem';
+import { FormDialog } from './FormDialog';
+import { ToolBar } from './ToolBar';
+import { SideBar } from './SideBar';
+import { AlertDialog } from './AlertDialog';
+import { ActionButton } from './ActionButton';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: indigo[500],
+    },
+    secondary: {
+      main: pink[500],
+    },
+  },
+});
+
+const Container = styled('div')({
+  margin: '0 auto',
+  maxWidth: '640px',
+  fontFamily: '-apple-system, BlinkMacSystemFont, Roboto, sans-serif',
+});
 
 export const App = (): JSX.Element => {
   const [text, setText] = useState('');
   const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<Filter>('all');
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const toggleDrawer = () => setDrawerOpen(!drawerOpen);
+  const toggleAlert = () => setAlertOpen(!alertOpen);
+
+  const toggleDialog = () => {
+    setDialogOpen(!dialogOpen);
+    setText('');
+  };
+
+  const handleOnChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setText(e.target.value);
   };
 
   const handleOnSubmit = () => {
-    if (!text) return;
+    if (!text) {
+      setDialogOpen(false);
+      return;
+    }
 
     const newTodo: Todo = {
       value: text,
@@ -30,6 +66,7 @@ export const App = (): JSX.Element => {
 
     setTodos([newTodo, ...todos]);
     setText('');
+    setDialogOpen(false);
   };
 
   const handleOnEdit = (id: number, value: string) => {
@@ -76,6 +113,10 @@ export const App = (): JSX.Element => {
     setTodos(newTodos);
   };
 
+  const handleOnSort = (filter: Filter) => {
+    setFilter(filter);
+  };
+
   const filteredTodos = todos.filter((todo) => {
     switch (filter) {
       case 'all':
@@ -91,69 +132,63 @@ export const App = (): JSX.Element => {
     }
   });
 
+  useEffect(() => {
+    localforage
+      .getItem('todo-20290925')
+      .then((values) => setTodos(values as Todo[]))
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    localforage.setItem('todo-20290925', todos).catch((err) => {
+      console.error(err);
+    });
+  }, [todos]);
+
   return (
-    <div>
-      <select
-        defaultValue="all"
-        onChange={(e) => setFilter(e.target.value as Filter)}
-      >
-        <option value="all">すべてのタスク</option>
-        <option value="checked">完了したタスク</option>
-        <option value="unchecked">現在のタスク</option>
-        <option value="removed">ごみ箱</option>
-      </select>
-      {filter === 'removed' ? (
-        <button
-          onClick={handleOnEmpty}
-          disabled={todos.filter((todo) => todo.removed).length === 0}
-        >
-          ゴミ箱を空にする
-        </button>
-      ) : (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleOnSubmit();
-          }}
-        >
-          <input
-            type="text"
-            value={text}
-            disabled={filter === 'checked'}
-            onChange={(e) => handleOnChange(e)}
-          />
-          <input
-            type="submit"
-            value="追加"
-            disabled={filter === 'checked'}
-            onSubmit={handleOnSubmit}
-          />
-        </form>
-      )}
-      <ul>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles styles={{ body: { margin: 0, padding: 0 } }} />
+      <ToolBar filter={filter} toggleDrawer={toggleDrawer} />
+      <SideBar
+        drawerOpen={drawerOpen}
+        toggleDrawer={toggleDrawer}
+        onSort={handleOnSort}
+      />
+      <FormDialog
+        text={text}
+        dialogOpen={dialogOpen}
+        onChange={handleOnChange}
+        onSubmit={handleOnSubmit}
+        toggleDialog={toggleDialog}
+      />
+      <AlertDialog
+        alertOpen={alertOpen}
+        onEmpty={handleOnEmpty}
+        toggleAlert={toggleAlert}
+      />
+      <Container>
         {filteredTodos.map((todo) => {
           return (
-            <li key={todo.id}>
-              <input
-                type="checkbox"
-                disabled={todo.removed}
-                checked={todo.checked}
-                onChange={() => handleOnCheck(todo.id, todo.checked)}
-              />
-              <input
-                type="text"
-                disabled={todo.checked || todo.removed}
-                value={todo.value}
-                onChange={(e) => handleOnEdit(todo.id, e.target.value)}
-              />
-              <button onClick={() => handleOnRemove(todo.id, todo.removed)}>
-                {todo.removed ? '復元' : '削除'}
-              </button>
-            </li>
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              filter={filter}
+              onCheck={handleOnCheck}
+              onEdit={handleOnEdit}
+              onRemove={handleOnRemove}
+            />
           );
         })}
-      </ul>
-    </div>
+        <ActionButton
+          todos={todos}
+          filter={filter}
+          alertOpen={alertOpen}
+          dialogOpen={dialogOpen}
+          toggleAlert={toggleAlert}
+          toggleDialog={toggleDialog}
+        />
+      </Container>
+    </ThemeProvider>
   );
 };
 
