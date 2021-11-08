@@ -1,4 +1,4 @@
-declare type Todo = {
+declare type Task = {
   value: string;
   id: number;
   checked: boolean;

@@ -11,14 +11,14 @@ import UndoIcon from '@mui/icons-material/Undo';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 type Props = {
-  todo: Todo;
+  task: Task;
   onEdit: (id: number, title: string) => void;
   onCheck: (id: number, checked: boolean) => void;
   onRemove: (id: number, removed: boolean) => void;
   filter: Filter;
 };
 
-const TodoCard = styled(Card)(({ theme }) => ({
+const TaskCard = styled(Card)(({ theme }) => ({
   marginTop: theme.spacing(1),
   marginLeft: theme.spacing(2),
   marginRight: theme.spacing(2),
@@ -58,25 +58,25 @@ const Trash = styled('button')(() => ({
   outline: 'none',
 }));
 
-export const TodoItem = (props: Props) => {
+export const TaskItem = (props: Props) => {
   return (
-    <TodoCard>
+    <TaskCard>
       <Form>
         <TextField
           fullWidth
           variant="standard"
-          value={props.todo.value}
-          onChange={(e) => props.onEdit(props.todo.id, e.target.value)}
-          disabled={props.todo.checked || props.todo.removed}
+          value={props.task.value}
+          onChange={(e) => props.onEdit(props.task.id, e.target.value)}
+          disabled={props.task.checked || props.task.removed}
         />
       </Form>
       <ButtonContainer>
         <Button
-          onClick={() => props.onCheck(props.todo.id, props.todo.checked)}
+          onClick={() => props.onCheck(props.task.id, props.task.checked)}
           disabled={props.filter === 'removed'}
           aria-label="check"
         >
-          {props.todo.checked ? (
+          {props.task.checked ? (
             <CheckIcon
               style={{
                 color: props.filter !== 'removed' ? pink.A200 : grey[500],
@@ -93,7 +93,7 @@ export const TodoItem = (props: Props) => {
             style={{
               userSelect: 'none',
               color:
-                props.todo.checked && props.filter !== 'removed'
+                props.task.checked && props.filter !== 'removed'
                   ? pink.A200
                   : grey[500],
             }}
@@ -102,16 +102,16 @@ export const TodoItem = (props: Props) => {
           </Typography>
         </Button>
         <Trash
-          onClick={() => props.onRemove(props.todo.id, props.todo.removed)}
+          onClick={() => props.onRemove(props.task.id, props.task.removed)}
           aria-label="trash"
         >
-          {props.todo.removed ? (
+          {props.task.removed ? (
             <UndoIcon style={{ color: lightBlue[500] }} />
           ) : (
             <DeleteIcon style={{ color: grey[500] }} />
           )}
         </Trash>
       </ButtonContainer>
-    </TodoCard>
+    </TaskCard>
   );
 };

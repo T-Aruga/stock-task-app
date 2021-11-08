@@ -5,7 +5,7 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { indigo, pink } from '@mui/material/colors';
 
-import { TodoItem } from './TodoItem';
+import { TaskItem } from './TaskItem';
 import { FormDialog } from './FormDialog';
 import { ToolBar } from './ToolBar';
 import { SideBar } from './SideBar';
@@ -31,7 +31,7 @@ const Container = styled('div')({
 
 export const App = (): JSX.Element => {
   const [text, setText] = useState('');
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [tasks, settasks] = useState<Task[]>([]);
   const [filter, setFilter] = useState<Filter>('all');
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -57,93 +57,93 @@ export const App = (): JSX.Element => {
       return;
     }
 
-    const newTodo: Todo = {
+    const newTask: Task = {
       value: text,
       id: new Date().getTime(),
       checked: false,
       removed: false,
     };
 
-    setTodos([newTodo, ...todos]);
+    settasks([newTask, ...tasks]);
     setText('');
     setDialogOpen(false);
   };
 
   const handleOnEdit = (id: number, value: string) => {
-    const deepCopy: Todo[] = JSON.parse(JSON.stringify(todos));
+    const deepCopy: Task[] = JSON.parse(JSON.stringify(tasks));
 
-    const newTodos = deepCopy.map((todo) => {
-      if (todo.id === id) {
-        todo.value = value;
+    const newTasks = deepCopy.map((task) => {
+      if (task.id === id) {
+        task.value = value;
       }
-      return todo;
+      return task;
     });
 
-    setTodos(newTodos);
+    settasks(newTasks);
   };
 
   const handleOnCheck = (id: number, checked: boolean) => {
-    const deepCopy: Todo[] = JSON.parse(JSON.stringify(todos));
+    const deepCopy: Task[] = JSON.parse(JSON.stringify(tasks));
 
-    const newTodos = deepCopy.map((todo) => {
-      if (todo.id === id) {
-        todo.checked = !checked;
+    const newTasks = deepCopy.map((task) => {
+      if (task.id === id) {
+        task.checked = !checked;
       }
-      return todo;
+      return task;
     });
 
-    setTodos(newTodos);
+    settasks(newTasks);
   };
 
   const handleOnRemove = (id: number, removed: boolean) => {
-    const deepCopy: Todo[] = JSON.parse(JSON.stringify(todos));
+    const deepCopy: Task[] = JSON.parse(JSON.stringify(tasks));
 
-    const newTodos = deepCopy.map((todo) => {
-      if (todo.id === id) {
-        todo.removed = !removed;
+    const newTasks = deepCopy.map((task) => {
+      if (task.id === id) {
+        task.removed = !removed;
       }
-      return todo;
+      return task;
     });
 
-    setTodos(newTodos);
+    settasks(newTasks);
   };
 
   const handleOnEmpty = () => {
-    const newTodos = todos.filter((todo) => !todo.removed);
-    setTodos(newTodos);
+    const newTasks = tasks.filter((task) => !task.removed);
+    settasks(newTasks);
   };
 
   const handleOnSort = (filter: Filter) => {
     setFilter(filter);
   };
 
-  const filteredTodos = todos.filter((todo) => {
+  const filteredTasks = tasks.filter((task) => {
     switch (filter) {
       case 'all':
-        return !todo.removed;
+        return !task.removed;
       case 'checked':
-        return todo.checked && !todo.removed;
+        return task.checked && !task.removed;
       case 'unchecked':
-        return !todo.checked && !todo.removed;
+        return !task.checked && !task.removed;
       case 'removed':
-        return todo.removed;
+        return task.removed;
       default:
-        return todo;
+        return task;
     }
   });
 
   useEffect(() => {
     localforage
-      .getItem('todo-20290925')
-      .then((values) => setTodos(values as Todo[]))
+      .getItem('task-20290925')
+      .then((values) => settasks(values as Task[]))
       .catch((err) => console.error(err));
   }, []);
 
   useEffect(() => {
-    localforage.setItem('todo-20290925', todos).catch((err) => {
+    localforage.setItem('task-20290925', tasks).catch((err) => {
       console.error(err);
     });
-  }, [todos]);
+  }, [tasks]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -167,11 +167,11 @@ export const App = (): JSX.Element => {
         toggleAlert={toggleAlert}
       />
       <Container>
-        {filteredTodos.map((todo) => {
+        {filteredTasks.map((task) => {
           return (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
+            <TaskItem
+              key={task.id}
+              task={task}
               filter={filter}
               onCheck={handleOnCheck}
               onEdit={handleOnEdit}
@@ -180,7 +180,7 @@ export const App = (): JSX.Element => {
           );
         })}
         <ActionButton
-          todos={todos}
+          tasks={tasks}
           filter={filter}
           alertOpen={alertOpen}
           dialogOpen={dialogOpen}

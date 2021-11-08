@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/DeleteRounded';
 import { styled } from '@mui/material/styles';
 
 type Props = {
-  todos: Todo[];
+  tasks: Task[];
   filter: Filter;
   alertOpen: boolean;
   dialogOpen: boolean;
@@ -20,7 +20,7 @@ const FabButton = styled(Fab)({
 });
 
 export const ActionButton = (props: Props) => {
-  const removed = props.todos.filter((todo) => todo.removed).length !== 0;
+  const removed = props.tasks.filter((task) => task.removed).length !== 0;
 
   return (
     <>
