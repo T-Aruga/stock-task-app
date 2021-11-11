@@ -7,12 +7,12 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { indigo, pink } from '@mui/material/colors';
 
-import { TaskItem } from './TaskItem';
-import { FormDialog } from './FormDialog';
-import { ToolBar } from './ToolBar';
-import { SideBar } from './SideBar';
-import { AlertDialog } from './AlertDialog';
-import { ActionButton } from './ActionButton';
+import { TaskItem } from './components/domain/task/TaskItem';
+import { FormDialog } from './components/common/FormDialog';
+import { ToolBar } from './components/common/ToolBar';
+import { SideBar } from './components/common/SideBar';
+import { AlertDialog } from './components/common/AlertDialog';
+import { ActionButton } from './components/common/ActionButton';
 
 const theme = createTheme({
   palette: {

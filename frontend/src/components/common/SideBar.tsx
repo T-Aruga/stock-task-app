@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Filter } from './types/taskTypes';
+import { Filter } from '../../types/taskTypes';
 
 import List from '@mui/material/List';
 import Avatar from '@mui/material/Avatar';
@@ -19,7 +19,7 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import { styled } from '@mui/material/styles';
 import { indigo, lightBlue, pink } from '@mui/material/colors';
 
-import pjson from '../package.json';
+import pjson from '../../../package.json';
 
 type Props = {
   drawerOpen: boolean;

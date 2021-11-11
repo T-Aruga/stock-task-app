@@ -1,5 +1,5 @@
 import React from 'react';
-import { Task, Filter } from './types/taskTypes';
+import { Task, Filter } from '../../types/taskTypes';
 
 import Fab from '@mui/material/Fab';
 import CreateIcon from '@mui/icons-material/CreateRounded';

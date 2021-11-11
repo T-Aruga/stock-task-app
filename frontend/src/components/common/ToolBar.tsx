@@ -1,5 +1,5 @@
 import React from 'react';
-import { Filter } from './types/taskTypes';
+import { Filter } from '../../types/taskTypes';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
