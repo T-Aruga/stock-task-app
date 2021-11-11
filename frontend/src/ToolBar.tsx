@@ -1,3 +1,4 @@
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,7 +12,7 @@ type Props = {
   toggleDrawer: () => void;
 };
 
-export const ToolBar = (props: Props) => {
+export const ToolBar: React.FC<Props> = (props: Props) => {
   const translator = (arg: Filter) => {
     switch (arg) {
       case 'all':
@@ -37,8 +38,7 @@ export const ToolBar = (props: Props) => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={props.toggleDrawer}
-          >
+            onClick={props.toggleDrawer}>
             <MenuIcon />
           </IconButton>
           <Typography>{translator(props.filter)}</Typography>

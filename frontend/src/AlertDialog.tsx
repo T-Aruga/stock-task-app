@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -17,7 +18,7 @@ const Alert = styled(Dialog)(() => ({
   fontFamily: '-apple-system, BlinkMacSystemFont, Roboto, sans-serif',
 }));
 
-export const AlertDialog = (props: Props) => {
+export const AlertDialog: React.FC<Props> = (props: Props) => {
   return (
     <Alert open={props.alertOpen} onClose={props.toggleAlert}>
       <DialogTitle>アラート</DialogTitle>
@@ -38,8 +39,7 @@ export const AlertDialog = (props: Props) => {
           }}
           color="secondary"
           aria-label="ok"
-          autoFocus
-        >
+          autoFocus>
           OK
         </Button>
       </DialogActions>

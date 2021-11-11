@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -9,19 +11,18 @@ type Props = {
   toggleDialog: () => void;
   onSubmit: () => void;
   onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
 };
 
-export const FormDialog = (props: Props) => {
+export const FormDialog: React.FC<Props> = (props: Props) => {
   return (
     <Dialog fullWidth open={props.dialogOpen} onClose={props.toggleDialog}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           props.onSubmit();
-        }}
-      >
+        }}>
         <div style={{ margin: '1em' }}>
           <TextField
             variant="standard"
@@ -41,8 +42,7 @@ export const FormDialog = (props: Props) => {
               variant="outlined"
               color="primary"
               onClick={props.onSubmit}
-              aria-label="add"
-            >
+              aria-label="add">
               追加
             </Button>
           </DialogActions>

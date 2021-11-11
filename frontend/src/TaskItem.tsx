@@ -1,3 +1,6 @@
+import React from 'react';
+import { Task } from './types/taskTypes';
+
 import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -58,7 +61,7 @@ const Trash = styled('button')(() => ({
   outline: 'none',
 }));
 
-export const TaskItem = (props: Props) => {
+export const TaskItem: React.FC<Props> = (props: Props) => {
   return (
     <TaskCard>
       <Form>
@@ -74,8 +77,7 @@ export const TaskItem = (props: Props) => {
         <Button
           onClick={() => props.onCheck(props.task.id, props.task.checked)}
           disabled={props.filter === 'removed'}
-          aria-label="check"
-        >
+          aria-label="check">
           {props.task.checked ? (
             <CheckIcon
               style={{
@@ -96,15 +98,13 @@ export const TaskItem = (props: Props) => {
                 props.task.checked && props.filter !== 'removed'
                   ? pink.A200
                   : grey[500],
-            }}
-          >
+            }}>
             Done
           </Typography>
         </Button>
         <Trash
           onClick={() => props.onRemove(props.task.id, props.task.removed)}
-          aria-label="trash"
-        >
+          aria-label="trash">
           {props.task.removed ? (
             <UndoIcon style={{ color: lightBlue[500] }} />
           ) : (

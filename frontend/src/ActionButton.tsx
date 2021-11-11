@@ -1,3 +1,6 @@
+import React from 'react';
+import { Task } from './types/taskTypes';
+
 import Fab from '@mui/material/Fab';
 import CreateIcon from '@mui/icons-material/CreateRounded';
 import DeleteIcon from '@mui/icons-material/DeleteRounded';
@@ -19,7 +22,7 @@ const FabButton = styled(Fab)({
   bottom: 15,
 });
 
-export const ActionButton = (props: Props) => {
+export const ActionButton: React.FC<Props> = (props: Props) => {
   const removed = props.tasks.filter((task) => task.removed).length !== 0;
 
   return (
@@ -29,8 +32,7 @@ export const ActionButton = (props: Props) => {
           aria-label="delete-button"
           color="secondary"
           onClick={props.toggleAlert}
-          disabled={!removed || props.alertOpen}
-        >
+          disabled={!removed || props.alertOpen}>
           <DeleteIcon />
         </FabButton>
       ) : (
@@ -38,8 +40,7 @@ export const ActionButton = (props: Props) => {
           aria-label="add-button"
           color="secondary"
           onClick={props.toggleDialog}
-          disabled={props.filter === 'checked' || props.dialogOpen}
-        >
+          disabled={props.filter === 'checked' || props.dialogOpen}>
           <CreateIcon />
         </FabButton>
       )}

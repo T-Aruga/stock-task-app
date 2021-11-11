@@ -1,5 +1,7 @@
 import localforage from 'localforage';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import { Task } from './types/taskTypes';
 
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
@@ -46,7 +48,7 @@ export const App = (): JSX.Element => {
   };
 
   const handleOnChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setText(e.target.value);
   };

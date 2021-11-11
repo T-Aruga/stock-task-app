@@ -1,3 +1,5 @@
+import React from 'react';
+
 import List from '@mui/material/List';
 import Avatar from '@mui/material/Avatar';
 import Drawer from '@mui/material/Drawer';
@@ -53,13 +55,12 @@ const IconCompleted = styled(CheckCircleIcon)(() => ({
   color: pink.A200,
 }));
 
-export const SideBar = (props: Props) => {
+export const SideBar: React.FC<Props> = (props: Props) => {
   return (
     <Drawer
       variant="temporary"
       open={props.drawerOpen}
-      onClose={props.toggleDrawer}
-    >
+      onClose={props.toggleDrawer}>
       <DrawerList role="presentation" onClick={props.toggleDrawer}>
         <DrawerHeader>
           <DrawerAvatar>
@@ -77,8 +78,7 @@ export const SideBar = (props: Props) => {
           <ListItem
             button
             onClick={() => props.onSort('unchecked')}
-            aria-label="incomplete"
-          >
+            aria-label="incomplete">
             <ListItemIcon>
               <IconUnChecked />
             </ListItemIcon>
@@ -87,8 +87,7 @@ export const SideBar = (props: Props) => {
           <ListItem
             button
             onClick={() => props.onSort('checked')}
-            aria-label="complete"
-          >
+            aria-label="complete">
             <ListItemIcon>
               <IconCompleted />
             </ListItemIcon>
@@ -97,8 +96,7 @@ export const SideBar = (props: Props) => {
           <ListItem
             button
             onClick={() => props.onSort('removed')}
-            aria-label="removed"
-          >
+            aria-label="removed">
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>
