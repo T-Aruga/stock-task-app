@@ -1,5 +1,5 @@
 import React from 'react';
-import { Task } from './types/taskTypes';
+import { Task, Filter } from './types/taskTypes';
 
 import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';

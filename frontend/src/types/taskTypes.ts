@@ -4,3 +4,5 @@ export type Task = {
   checked: boolean;
   removed: boolean;
 };
+
+export type Filter = 'all' | 'checked' | 'unchecked' | 'removed';

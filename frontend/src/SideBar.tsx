@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Filter } from './types/taskTypes';
+
 import List from '@mui/material/List';
 import Avatar from '@mui/material/Avatar';
 import Drawer from '@mui/material/Drawer';

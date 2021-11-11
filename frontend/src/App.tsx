@@ -1,7 +1,7 @@
 import localforage from 'localforage';
 import React, { useState, useEffect } from 'react';
 
-import { Task } from './types/taskTypes';
+import { Task, Filter } from './types/taskTypes';
 
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
