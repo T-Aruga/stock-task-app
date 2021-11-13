@@ -18,7 +18,7 @@ export const ToolBar: React.FC<Props> = (props: Props) => {
   const translator = (arg: Filter) => {
     switch (arg) {
       case 'all':
-        return 'すべてのタスク';
+        return '全てのタスク';
       case 'unchecked':
         return '現在のタスク';
       case 'checked':
