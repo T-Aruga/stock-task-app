@@ -75,7 +75,7 @@ export const SideBar: React.FC<Props> = (props: Props) => {
             <ListItemIcon>
               <SubjectIcon />
             </ListItemIcon>
-            <ListItemText secondary="すべてのタスク" />
+            <ListItemText secondary="全てのタスク" />
           </ListItem>
           <ListItem
             button
