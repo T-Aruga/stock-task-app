@@ -3,7 +3,7 @@ services:
   react:
     build:
       context: .
-      dockerfile: ./frontend/Dockerfile
+      dockerfile: ./frontend/build/Dockerfile
     container_name: react_app
     tty: true
     volumes:
