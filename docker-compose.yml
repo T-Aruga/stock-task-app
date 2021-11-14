@@ -1,6 +1,6 @@
 version: "3"
 services:
-  react:
+  front:
     build:
       context: .
       dockerfile: ./frontend/build/Dockerfile
@@ -11,3 +11,11 @@ services:
     command: sh -c "cd /app/react  && yarn start"
     ports:
       - 3000:3000
+  api:
+    build:
+      context: .
+      dockerfile: ./backend/build/Dockerfile
+    container_name: go_api
+    tty: true
+    volumes:
+      - ./backend:/go/src/app
