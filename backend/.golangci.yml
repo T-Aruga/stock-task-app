@@ -1,0 +1,16 @@
+# .golangci.yml
+linters:
+  disable-all: true
+  enable:
+    - goimports
+    - errcheck
+    - govet
+    - typecheck
+    - deadcode
+    - structcheck
+    - stylecheck
+    - gosimple
+    - unused
+    - varcheck
+issues:
+  exclude-use-default: false

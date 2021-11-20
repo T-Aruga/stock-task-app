@@ -1,6 +1,6 @@
 export type Task = {
-  value: string;
   id: number;
+  value: string;
   checked: boolean;
   removed: boolean;
 };
