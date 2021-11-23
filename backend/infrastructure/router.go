@@ -16,15 +16,15 @@ func Init() {
 
 	// Routes
 	e.POST("/tasks", func(c echo.Context) error {
-		return taskController.Create(c)
+		return taskController.CreateTask(c)
 	})
 
 	e.GET("/tasks/:id", func(c echo.Context) error {
-		return taskController.Show(c)
+		return taskController.GetTask(c)
 	})
 
 	e.GET("/tasks", func(c echo.Context) error {
-		return taskController.Index(c)
+		return taskController.GetTasks(c)
 	})
 
 	e.Logger.Fatal(e.Start(":8080"))

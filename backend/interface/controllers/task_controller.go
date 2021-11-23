@@ -20,7 +20,7 @@ func NewTaskController(sqlHandler database.SQLHandler) *TaskController {
 	}
 }
 
-func (controller *TaskController) Create(c Context) (err error) {
+func (controller *TaskController) CreateTask(c Context) (err error) {
 	t := domain.Task{}
 	c.Bind(&t)
 	task, err := controller.Interactor.AddTask(t)
@@ -30,7 +30,7 @@ func (controller *TaskController) Create(c Context) (err error) {
 	return c.JSON(200, task)
 }
 
-func (controller *TaskController) Index(c Context) (err error) {
+func (controller *TaskController) GetTasks(c Context) (err error) {
 	tasks, err := controller.Interactor.GetAllTasks()
 	if err != nil {
 		return c.JSON(500, NewError(err))
@@ -38,7 +38,7 @@ func (controller *TaskController) Index(c Context) (err error) {
 	return c.JSON(200, tasks)
 }
 
-func (controller *TaskController) Show(c Context) (err error) {
+func (controller *TaskController) GetTask(c Context) (err error) {
 	task, err := controller.Interactor.GetTaskByID(c.Param("id"))
 	if err != nil {
 		return c.JSON(500, NewError(err))
