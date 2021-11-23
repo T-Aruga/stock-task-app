@@ -1,0 +1,5 @@
+development:
+  dialect: mysql
+  datasource: root:password@tcp(localhost:3306)/taskapp?charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=true
+  dir: scripts/migrations
+  table: migrations
