@@ -4,7 +4,7 @@ package usecase
 import "github.com/T-Aruga/stock-task-app/backend/domain"
 
 type TaskRepository interface {
-	Save(task domain.Task) (int, error)
-	FindByID(id int) (domain.Task, error)
+	Store(task domain.Task) (domain.Task, error)
+	FindByID(id string) (domain.Task, error)
 	FindAll() ([]domain.Task, error)
 }

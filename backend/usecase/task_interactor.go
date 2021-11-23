@@ -10,18 +10,14 @@ type TaskInteractor struct {
 }
 
 func (interactor *TaskInteractor) AddTask(task domain.Task) (domain.Task, error) {
-	id, err := interactor.TaskRepository.Save(task)
-	if err != nil {
-		return task, err
-	}
-	foundTask, err := interactor.TaskRepository.FindByID(id)
+	foundTask, err := interactor.TaskRepository.Store(task)
 	if err != nil {
 		return foundTask, err
 	}
 	return foundTask, nil
 }
 
-func (interactor *TaskInteractor) GetTask(id int) (domain.Task, error) {
+func (interactor *TaskInteractor) GetTaskByID(id string) (domain.Task, error) {
 	task, err := interactor.TaskRepository.FindByID(id)
 	if err != nil {
 		return task, err
